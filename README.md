@@ -4,7 +4,9 @@ This smart enum implement these features by parsing enum definition text.
 
 
 # usage
-// enum class UserType
+## define smart enum class
+
+```c++
 DEFINE_SMART_ENUM(UserType, int,
 	Guest,
 	Individual,
@@ -32,13 +34,14 @@ UserType myType = Enum<UserType>::ParseFrom("individual", UserType::Guest);
 // for C++17
 // optional<enum_type> ParseFrom(string, ignoreCase = true)
 std::optional<UserType> myType = Enum<UserType>::ParseFrom("inDividual", false);
-
+```
 
 # limitation
 Smart enum cannot recognize const variables, values of other enums.
 so, These are wrong. (just example)
 
-1)
+## CASE 1
+```c++
 constexpr int MAX_USER_TYPE_COUNT = 4;
 DEFINE_SMART_ENUM(UserType, int,
 	Guest,
@@ -47,10 +50,12 @@ DEFINE_SMART_ENUM(UserType, int,
 	Admin,
 	MaxUserType = MAX_USER_TYPE_COUNT
 );
+```
 
 parser cannot recognize MAX_USER_TYPE_COUNT, so it throw parsing_failed_exception at MaxUserType.
 
-2)
+## CASE 2
+```c++
 DEFINE_SMART_ENUM(EnumType, int,
 	Normal = 100,
 	Smart = 200
@@ -59,24 +64,27 @@ DEFINE_SMART_ENUM(EnumType, int,
 DEFINE_SMART_ENUM(FooType, int,
 	Why = EnumType::Smart
 );
-
+```
 parser cannot recognize EnumType::Smart, so it throw parsing_failed_exception at Why.
-
 but, belows are enable.
 
-1)
+## CASE 3
+```c++
 #define MY_DEBUG_VALUE	200
 DEFINE_SMART_ENUM(FooType, int,
 	Why = MY_DEBUG_VALUE
 );
+```
 
-2)
+## CASE 4
+```c++
 DEFINE_SMART_ENUM(FooType, int,
 	A,
 	B,
 	C,
 	HEY = C
 );
+```
 
-case 2, FooType::C == FooType::Hey, Enum<FooType>::ToString(Foo::HEY) returns "C".
+case 4, FooType::C == FooType::Hey, Enum<FooType>::ToString(Foo::HEY) returns "C".
 but Enum<FooType>::ParseFrom("hey") returns Foo::HEY.

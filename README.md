@@ -66,9 +66,11 @@ DEFINE_SMART_ENUM(FooType, int,
 );
 ```
 parser cannot recognize EnumType::Smart, so it throw parsing_failed_exception at Why.
+
 but, belows are enable.
 
-## CASE 3
+# enable cases
+## CASE 1
 ```c++
 #define MY_DEBUG_VALUE	200
 DEFINE_SMART_ENUM(FooType, int,
@@ -76,7 +78,7 @@ DEFINE_SMART_ENUM(FooType, int,
 );
 ```
 
-## CASE 4
+## CASE 2
 ```c++
 DEFINE_SMART_ENUM(FooType, int,
 	A,
@@ -86,5 +88,5 @@ DEFINE_SMART_ENUM(FooType, int,
 );
 ```
 
-case 4, FooType::C == FooType::Hey, Enum<FooType>::ToString(Foo::HEY) returns "C".
+case 2, FooType::C == FooType::Hey, Enum<FooType>::ToString(Foo::HEY) returns "C".
 but Enum<FooType>::ParseFrom("hey") returns Foo::HEY.

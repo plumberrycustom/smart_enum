@@ -19,13 +19,18 @@
 # Fortran module files
 *.mod
 *.smod 
+
 # Executables
 *.exe
 *.out
 *.app
 
-#ide
+# IDE files
 .vs/
 output/
-smart_enum/*/
-smart_enum_test/*/
+smart_enum/Debug/
+smart_enum/Release/
+smart_enum/x64/
+smart_enum_test/Debug/
+smart_enum_test/Release/
+smart_enum_test/x64/
